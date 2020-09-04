@@ -7,11 +7,13 @@ public class PhoneBook {
         boolean continueToWork = true;
         while (continueToWork) {
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Give mne a name");
-            String name = scanner.nextLine();
-            Boolean isNameCorrect = PhoneBook.checkName(name);
-            System.out.println(isNameCorrect);
-            continueToWork = false;
+            System.out.println("Give mne a name or type exit");
+            String userInput = scanner.nextLine();
+            if ("exit".equals(userInput)) {
+                continueToWork = false;
+            } else {
+                System.out.println(PhoneBook.checkName(userInput));
+            }
         }
     }
 
