@@ -17,9 +17,13 @@ public class PhoneBook {
 
 
     public static boolean checkName(String name) {
+        return name instanceof String && PhoneBook.checkNameLength(name); //check if name is String and it has length of 3
+    }
+
+    private static boolean checkNameLength(String name) {
         int length = name.trim().split(" ").length;
         return length == 3;
-    }
+}
 
     public static boolean checkPhoneNumber(String phoneNumber) {
         return true;
