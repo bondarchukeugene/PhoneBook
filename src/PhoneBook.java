@@ -17,11 +17,7 @@ public class PhoneBook {
                 System.out.println("Please add number");
                 String nextUserInput = scanner.nextLine();
                 if (checkPhoneNumber(nextUserInput)) {
-                    ArrayList<String> phoneBookEntry = new ArrayList<>();
-                    phoneBookEntry.add(userInput);
-                    phoneBookEntry.add(nextUserInput);
-                    phoneBook.add(phoneBookEntry);
-                    System.out.println( phoneBook.get(0).get(1) );
+                    PhoneBook.addNewEntry(phoneBook,userInput,nextUserInput);
                 }
             } else {
                 System.out.println("Name is incorrect, type exit or try again");
@@ -29,14 +25,11 @@ public class PhoneBook {
         }
     }
 
-
-    private static String[][] addNewEntry(String[][] phonebook, String name, String number) {
-        String[][] newPhoneBook = new String[phonebook.length + 1][2];
-        System.arraycopy(phonebook, 0, newPhoneBook, 0, phonebook.length);
-        newPhoneBook[phonebook.length][0] = name;
-        newPhoneBook[phonebook.length][1] = number;
-        return newPhoneBook;
-
+    private static void addNewEntry(ArrayList<ArrayList<String>> phoneBook, String name, String number) {
+        ArrayList<String> phoneBookEntry = new ArrayList<>();
+        phoneBookEntry.add(name);
+        phoneBookEntry.add(number);
+        phoneBook.add(phoneBookEntry);
     }
 
 
