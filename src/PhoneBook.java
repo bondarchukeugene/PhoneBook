@@ -18,7 +18,10 @@ public class PhoneBook {
                     String userInputName = scanner.nextLine();
                     if (checkNameFormat(userInputName)) {
                         if (PhoneBook.checkNameExistance(phoneBook, userInputName)) {
-                            System.out.println("This name is already in the list");
+                            String number = PhoneBook.getNumberbyName(phoneBook,userInputName);
+                            String text = "This name is already in the list. Number is:%s";
+                            String formatedText = String.format(text,number);
+                            System.out.println(formatedText);
                         } else {
                             System.out.println("Type phone number");
                             String userInputNumber = scanner.nextLine();
@@ -52,6 +55,19 @@ public class PhoneBook {
 
         }
         return isNameExist;
+    }
+
+
+    private static String getNumberbyName(ArrayList<ArrayList<String>> phoneBook, String name) {
+
+        String number = "";
+        for (ArrayList<String> phoneBookEntry : phoneBook) {
+            if (phoneBookEntry.get(0).equals(name)) {
+                number = phoneBookEntry.get(1);
+            }
+
+        }
+        return number;
     }
 
     private static void printAllCommands() {
