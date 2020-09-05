@@ -10,22 +10,32 @@ public class PhoneBook {
         boolean continueToWork = true;
         while (continueToWork) {
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Please add command: new (add new entry), print (print all book), exit");
+            PhoneBook.printIntro();
             String userInputCommand = scanner.nextLine();
             switch (userInputCommand) {
-                case "new":
+                case "NEW":
                     System.out.println("Type name");
                     String userInputName = scanner.nextLine();
-
-                    System.out.println("Type phone number");
-                    String userInputNumber = scanner.nextLine();
-                    PhoneBook.addNewEntry(phoneBook, userInputName, userInputNumber);
+                    if (checkNameFormat(userInputName)) {
+                        if (PhoneBook.checkNameExistance(phoneBook, userInputName)) {
+                            System.out.println("This name is already in the list");
+                        } else {
+                            System.out.println("Type phone number");
+                            String userInputNumber = scanner.nextLine();
+                            PhoneBook.addNewEntry(phoneBook, userInputName, userInputNumber);
+                        }
+                    } else {
+                        System.out.println("Incorrect name");
+                    }
                     break;
-                case "exit":
+                case "EXIT":
                     continueToWork = false;
                     break;
-                case "print":
-                    PhoneBook.printAllBook (phoneBook);
+                case "PRINT":
+                    PhoneBook.printAllBook(phoneBook);
+                    break;
+                case "HELP":
+                    PhoneBook.printAllCommands();
                     break;
                 default:
                     System.out.println("Incorrect command");
@@ -33,17 +43,10 @@ public class PhoneBook {
         }
     }
 
-    private static void printAllBook(ArrayList<ArrayList<String>> phoneBook) {
-        for (ArrayList<String> phoneBookEntry:phoneBook){
-            System.out.println(Arrays.toString(phoneBookEntry.toArray()));
-
-        }
-    }
-
-    private static boolean checkNumberbyName(ArrayList<ArrayList<String>> phoneBook, String name) {
+    private static boolean checkNameExistance(ArrayList<ArrayList<String>> phoneBook, String name) {
         boolean isNameExist = false;
         for (ArrayList<String> phoneBookEntry : phoneBook) {
-            if (phoneBookEntry.get(0) == name) {
+            if (phoneBookEntry.get(0).equals(name)) {
                 isNameExist = true;
             }
 
@@ -51,11 +54,21 @@ public class PhoneBook {
         return isNameExist;
     }
 
-    private static void getNumberbyName(ArrayList<ArrayList<String>> phoneBook, String name) {
+    private static void printAllCommands() {
+        System.out.println("NEW to add new entry");
+        System.out.println("PRINT to print all entries in the book");
+        System.out.println("FIND NAME to find number by name");
+        System.out.println("EXIT for exit");
+    }
+
+    private static void printIntro() {
+        System.out.println("Please type command (type HELP to show a list of all commands)");
+
+    }
+
+    private static void printAllBook(ArrayList<ArrayList<String>> phoneBook) {
         for (ArrayList<String> phoneBookEntry : phoneBook) {
-            if (phoneBookEntry.get(0) == name) {
-                System.out.println(phoneBookEntry.get(1));
-            }
+            System.out.println(Arrays.toString(phoneBookEntry.toArray()));
 
         }
     }
@@ -63,12 +76,13 @@ public class PhoneBook {
     private static void addNewEntry(ArrayList<ArrayList<String>> phoneBook, String name, String number) {
         ArrayList<String> phoneBookEntry = new ArrayList<>();
         phoneBookEntry.add(name);
-        phoneBookEntry.add(number);
+        String formatedNumber = PhoneBook.formatPhoneNumber(number);
+        phoneBookEntry.add(formatedNumber);
         phoneBook.add(phoneBookEntry);
     }
 
 
-    public static boolean checkName(String name) {
+    public static boolean checkNameFormat(String name) {
         return name instanceof String && PhoneBook.checkNameLength(name); //check if name is String and it has length of 3
     }
 
@@ -77,26 +91,16 @@ public class PhoneBook {
         return length == 3;
     }
 
-    public static boolean checkPhoneNumber(String phoneNumber) {
-        return true;
-    }
-
-    public static String formatName(String name) {
-        return "";
-    }
-
     public static String formatPhoneNumber(String number) {
-        return "";
+        number = number.replaceAll("[\\D+]", "");
+        number = number.substring(number.length() - 10);
+        String code = number.substring(0, 3);
+        String first = number.substring(3, 6);
+        String second = number.substring(6, 8);
+        String third = number.substring(8);
+        return String.format("8 %s %s %s %s", code, first, second, third);
     }
 
-    public static void add(String[][] book, String name, String number) {
-        //add logic
-    }
 
-    public static void list(String[][] book) {
-//        test changces
-
-
-    }
 }
 
