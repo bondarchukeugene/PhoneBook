@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PhoneBook {
 
@@ -9,19 +10,53 @@ public class PhoneBook {
         boolean continueToWork = true;
         while (continueToWork) {
             Scanner scanner = new Scanner(System.in);
-            System.out.println("Give mne a name or type exit");
-            String userInput = scanner.nextLine();
-            if ("exit".equals(userInput)) {
-                continueToWork = false;
-            } else if (PhoneBook.checkName(userInput)) {
-                System.out.println("Please add number");
-                String nextUserInput = scanner.nextLine();
-                if (checkPhoneNumber(nextUserInput)) {
-                    PhoneBook.addNewEntry(phoneBook,userInput,nextUserInput);
-                }
-            } else {
-                System.out.println("Name is incorrect, type exit or try again");
+            System.out.println("Please add command: new (add new entry), print (print all book), exit");
+            String userInputCommand = scanner.nextLine();
+            switch (userInputCommand) {
+                case "new":
+                    System.out.println("Type name");
+                    String userInputName = scanner.nextLine();
+
+                    System.out.println("Type phone number");
+                    String userInputNumber = scanner.nextLine();
+                    PhoneBook.addNewEntry(phoneBook, userInputName, userInputNumber);
+                    break;
+                case "exit":
+                    continueToWork = false;
+                    break;
+                case "print":
+                    PhoneBook.printAllBook (phoneBook);
+                    break;
+                default:
+                    System.out.println("Incorrect command");
             }
+        }
+    }
+
+    private static void printAllBook(ArrayList<ArrayList<String>> phoneBook) {
+        for (ArrayList<String> phoneBookEntry:phoneBook){
+            System.out.println(Arrays.toString(phoneBookEntry.toArray()));
+
+        }
+    }
+
+    private static boolean checkNumberbyName(ArrayList<ArrayList<String>> phoneBook, String name) {
+        boolean isNameExist = false;
+        for (ArrayList<String> phoneBookEntry : phoneBook) {
+            if (phoneBookEntry.get(0) == name) {
+                isNameExist = true;
+            }
+
+        }
+        return isNameExist;
+    }
+
+    private static void getNumberbyName(ArrayList<ArrayList<String>> phoneBook, String name) {
+        for (ArrayList<String> phoneBookEntry : phoneBook) {
+            if (phoneBookEntry.get(0) == name) {
+                System.out.println(phoneBookEntry.get(1));
+            }
+
         }
     }
 
