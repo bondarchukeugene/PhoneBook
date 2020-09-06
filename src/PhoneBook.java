@@ -2,6 +2,8 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+// + метод для форматирования первых букв имени
+
 public class PhoneBook {
 
     public static void main(String[] args) {
@@ -84,7 +86,9 @@ public class PhoneBook {
 
     private static void printAllBook(ArrayList<ArrayList<String>> phoneBook) {
         for (ArrayList<String> phoneBookEntry : phoneBook) {
-            System.out.println(Arrays.toString(phoneBookEntry.toArray()));
+            String name = phoneBookEntry.get(0);
+            String number = phoneBookEntry.get(1);
+            System.out.println(name+":"+number);
 
         }
     }
