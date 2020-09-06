@@ -19,6 +19,7 @@ public class PhoneBook {
                     System.out.println("Type name");
                     String userInputName = scanner.nextLine();
                     if (checkNameFormat(userInputName)) {
+                        String userInputNameFormated = PhoneBook.formatName (userInputName);
                         if (PhoneBook.checkNameExistance(phoneBook, userInputName)) {
                             String number = PhoneBook.getNumberbyName(phoneBook,userInputName);
                             String text = "This name is already in the list. Number is:%s";
@@ -46,6 +47,16 @@ public class PhoneBook {
                     System.out.println("Incorrect command");
             }
         }
+    }
+
+    private static String formatName(String name) {
+        String [] nameDivided =name.trim().split(" ");
+        String nameFormated = "";
+        for (String namePart : nameDivided){
+            String nameTemp = namePart.substring(0,1).toUpperCase() + namePart.substring(1).toLowerCase()+" ";
+            nameFormated += nameTemp;
+        }
+        return nameFormated;
     }
 
     private static boolean checkNameExistance(ArrayList<ArrayList<String>> phoneBook, String name) {
