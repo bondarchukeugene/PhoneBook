@@ -2,12 +2,11 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-// + метод для форматирования первых букв имени
+
 
 public class PhoneBook {
 
     public static void main(String[] args) {
-        //Добавить считывание ввода пользователя в цикле
         ArrayList<ArrayList<String>> phoneBook = new ArrayList<ArrayList<String>>();
         boolean continueToWork = true;
         while (continueToWork) {
@@ -20,15 +19,15 @@ public class PhoneBook {
                     String userInputName = scanner.nextLine();
                     if (checkNameFormat(userInputName)) {
                         String userInputNameFormated = PhoneBook.formatName (userInputName);
-                        if (PhoneBook.checkNameExistance(phoneBook, userInputName)) {
-                            String number = PhoneBook.getNumberbyName(phoneBook,userInputName);
+                        if (PhoneBook.checkNameExistance(phoneBook, userInputNameFormated)) {
+                            String number = PhoneBook.getNumberbyName(phoneBook,userInputNameFormated);
                             String text = "This name is already in the list. Number is:%s";
                             String formatedText = String.format(text,number);
                             System.out.println(formatedText);
                         } else {
                             System.out.println("Type phone number");
                             String userInputNumber = scanner.nextLine();
-                            PhoneBook.addNewEntry(phoneBook, userInputName, userInputNumber);
+                            PhoneBook.addNewEntry(phoneBook, userInputNameFormated, userInputNumber);
                         }
                     } else {
                         System.out.println("Incorrect name");
